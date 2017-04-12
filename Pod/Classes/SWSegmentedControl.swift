@@ -8,12 +8,17 @@
 
 import UIKit
 
+public protocol SWSegmentedControlDelegate {
+    func segmentControl(_segmentControl: SWSegmentedControl, didSelectSegmentAt index: Int)
+}
+
 @IBDesignable
 open class SWSegmentedControl: UIControl {
     
     private var selectionIndicatorView: UIView!
     private var buttons: [UIButton]?
     private var items: [String] = ["First", "Second"]
+    public var delegate: SWSegmentedControlDelegate!
     
     
     // Wait for a day UIFont will be inspectable
@@ -253,6 +258,7 @@ open class SWSegmentedControl: UIControl {
         
         self.setSelectedSegmentIndex(index)
         self.sendActions(for: .valueChanged)
+        self.delegate?.segmentControl(_segmentControl: self, didSelectSegmentAt: self.selectedSegmentIndex)
     }
     
     // MARK: - Layout Helpers
